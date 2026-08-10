@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MelodyAI | CodeAlpha Task 3</title><link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body>
+<header><a class="brand" href="/"><b>♪</b> Melody<span>AI</span></a><small>● AI music engine ready</small></header>
+<main><section class="hero"><label>CODEALPHA AI INTERNSHIP • TASK 3</label><h1>Turn a mood into<br><em>an original melody.</em></h1>
+<p>Generate fresh symbolic music using a lightweight probabilistic sequence model trained on melody patterns.</p></section>
+<section class="card"><div class="title"><div><label>AI MUSIC GENERATOR</label><h2>Create your track</h2></div><span>N-GRAM / PROBABILISTIC MODEL</span></div>
+<div class="controls"><div><label>Mood</label><select id="mood"><option value="calm">🌙 Calm</option><option value="happy">☀️ Happy</option><option value="energetic">⚡ Energetic</option><option value="sad">🌧️ Sad</option></select></div>
+<div><label>Tempo <strong id="tv">100 BPM</strong></label><input id="tempo" type="range" min="60" max="160" value="100"></div>
+<div><label>Length</label><select id="bars"><option value="4">4 bars</option><option value="8" selected>8 bars</option><option value="16">16 bars</option><option value="32">32 bars</option></select></div></div>
+<button id="go">✦ Generate AI Music</button><div id="status"></div><div id="result" class="result" hidden><b>♫</b><div><strong>Your AI melody is ready</strong><small id="meta"></small></div><audio id="player" controls></audio><a id="download">Download MIDI</a></div></section>
+<section class="features"><article><b>01</b><h3>Learn patterns</h3><p>The model learns note-to-note transition probabilities from symbolic melody examples.</p></article>
+<article><b>02</b><h3>Generate sequence</h3><p>New notes are sampled from learned transitions, producing a different melody each time.</p></article>
+<article><b>03</b><h3>Add harmony</h3><p>A mood-specific chord progression creates a richer MIDI arrangement.</p></article></section>
+<section class="dark"><label>HOW IT WORKS</label><h2>From training patterns to new music</h2><p>Music is treated like a sequence model: previous notes influence the probability of the next note. Mood-specific patterns influence the style while random sampling keeps generations varied.</p></section>
+<section class="project"><label>PROJECT INFORMATION</label><h2>CodeAlpha Artificial Intelligence Internship</h2><p>Task 3 — Music Generation with AI. Python, Flask, music21 and probabilistic sequence modeling.</p></section></main>
+<footer>MelodyAI • CodeAlpha AI Internship — Task 3</footer>
+<script>
+const t=document.getElementById('tempo'),tv=document.getElementById('tv'),go=document.getElementById('go'),r=document.getElementById('result'),s=document.getElementById('status'),p=document.getElementById('player'),d=document.getElementById('download');
+t.oninput=()=>tv.textContent=t.value+' BPM';
+go.onclick=async()=>{go.disabled=true;go.textContent='Generating…';s.textContent='AI is composing a new melody…';r.hidden=true;
+try{let x=await fetch('/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mood:mood.value,tempo:+t.value,bars:+bars.value})});let j=await x.json();if(!j.success)throw Error(j.message);
+p.src=j.file;d.href=j.file;d.download='ai-melody.mid';meta.textContent=mood.value+' • '+t.value+' BPM • '+bars.value+' bars';r.hidden=false;s.textContent='Generated successfully. Press play to listen.'
+}catch(e){s.textContent=e.message}finally{go.disabled=false;go.textContent='✦ Generate AI Music'}};
+</script></body></html>
