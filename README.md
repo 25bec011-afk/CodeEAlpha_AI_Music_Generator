@@ -1,4 +1,12 @@
-# MelodyAI — CodeAlpha AI Internship Task 3
+# 🎵 MelodyAI — AI Music Generator
+
+## 🌐 Live Demo
+
+👉 **[Open the Live Website](https://codeealpha-ai-music-generator.onrender.com)**
+
+## 📌 CodeAlpha Internship — Task 3
+
+AI Music Generation using Python, Flask, music21 and a probabilistic sequence model.# MelodyAI — CodeAlpha AI Internship Task 3
 
 AI Music Generation web application. It generates original symbolic melodies as MIDI using a lightweight probabilistic sequence model trained on mood-specific melody patterns.
 
